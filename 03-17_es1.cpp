@@ -73,10 +73,7 @@ main()
 	        i=i+1;
 	        okFino=okFino+1;
 	    }
-	    else
-	    {
-	        i=i+1;
-	    }
+	    else i=i+1;
 	}
 	
 	stampa(A, okFino);
