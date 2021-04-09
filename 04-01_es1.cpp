@@ -15,48 +15,48 @@ void leggi(int* X, int & nelem)
 
 void stampa(bool (*X)[7], int dim)
 {
-	int righePiene=(dim/7)+1;
-	//int resto=dim%7;
-
-	for(int i=0; i < righePiene; i++)
+    int righe=0;
+    if(dim<7) righe=1;
+    else if(dim%7 != 0) righe=(dim/7)+1;
+    else righe=dim/7;
+    
+	for(int i=0; i < righe; i++)
 	{
 		for(int j=0; j<7; j++) cout << X[i][j] << ' ';
 		cout << endl;
 	}
-
-	//for(int i=0; i<resto; i++) cout<< X[righePiene+1][i] << ' ';
 }
 
-bool calcB( int (*A)[7], int r, int c, int righeP)
+int lungR(int dim, int r) //lunghezza riga
 {
-    bool rigaValida = true;
-
-    for(int w=0; w<7 && rigaValida; w++)
-    {
-        bool trovato = false;
-
-        for(int z=0; z<righeP && !trovato; z++) if(A[r][w] == A[z][c]) trovato=true;
-
-        if(!trovato) rigaValida=false;
-    }
-
-    return rigaValida;
+	if (r<dim/7) return 7;
+	else return dim%7;
 }
 
-bool calcBresto(int (*A)[7], int r, int c, int righeP, int resto)
+int altC(int dim, int c) //altezza colonna
 {
-	bool rigaValida = true;
+	if (c<dim%7) return (dim/7)+1;
+	else return dim/7;
+}
 
-    for(int w=0; w<resto && rigaValida; w++)
-    {
-        bool trovato = false;
+bool calcB(int (*A)[7], int r, int c, int dim) //calcola valore cella B
+{
+	bool rigaValida=true;
 
-        for(int z=0; z<righeP && !trovato; z++) if(A[r][w] == A[z][c]) trovato=true;
+	for(int elemR=0; elemR<lungR(dim, r) && rigaValida; elemR++)
+	{
+		bool trovato=false;
+		
+		for(int elemC=0; elemC<altC(dim, c) && !trovato; elemC++)
+		{
+			if (A[r][elemR] == A[elemC][c]) trovato=true;
+		}
 
-        if(!trovato) rigaValida=false;
-    }
+		if (!trovato) rigaValida=false;
+	}
 
-    return rigaValida;
+	return rigaValida;
+	
 }
 
 main()
@@ -64,17 +64,29 @@ main()
 	int A[7][7], nelem;
 	bool B[7][7], finitoR=false;
 	leggi(*A,nelem);
-	
-	int righePieneA=nelem/7;
-	int restoA=nelem%7;
-	int righeB=righePieneA+1;
 
-	for(int r=0; r<righePieneA; r++)
+	int colA=7, rigA=nelem/7;
+	if (nelem<7) colA=nelem; //nelem minore di riga
+	if (nelem%7>0) rigA=rigA+1; //riga extra incompleta
+
+	for(int r=0; r<rigA; r++) //scorri riga
 	{
-		for(int c=0; c<7; c++) B[r][c]=calcB(A, r, c, righePieneA);
+		for(int c=0; c<colA; c++) //scorri colonna
+		{
+			B[r][c]=calcB(A, r, c, nelem); //calcola valore
+		}
 	}
-
-	for(int c=0; c<7; c++) B[righePieneA+1][c]=calcBresto(A, righePieneA+1, c, righePieneA, restoA);
 
 	stampa(B,nelem);
 }
+
+/** CORRETTEZZA
+ * 
+ * La correttezza dell'esercizio e data dalla correttezza del ciclo della funzione
+ * calcB() che è corretta per la dimostrazione dell'esercizio 1 del 24/03
+ * 
+ * L'unica modifica sta nelle lunghezze di riga e colonna calcolate ad ogni chiamata di
+ * calcB() tramite le funzioni lungR() e altC() che servono semplicemente e gestire la
+ * presenza di righe e colonne non completamente riempite
+ * 
+ **/  

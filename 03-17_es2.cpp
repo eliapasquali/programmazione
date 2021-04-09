@@ -30,12 +30,20 @@ main()
 {
 	int A[30];
 	int nelemA= leggi(A,30);
-	//PRE= 0<nelemA<=30 && assumiamo che A[0..nelemA-1] contiene solo 2 valori distinti,  il valore iniziale di A è A_orig
-	int i=1, ultimax=1;
-	while(i<nelemA)
+	
+	//PRE: 0<nelemA<=30 && assumiamo che A[0..nelemA-1] contiene solo 2 valori distinti,  il valore iniziale di A è A_orig
+	int i=0, ultimax=0, x=A[0];
+	
+	while(i<nelemA) //R: 0<=i<=nelemA && A[0..ultimax-1] contiene solo valori==x==A[o]
 	{
-		
+		if(A[i]==x)
+		{
+			A[i]=A[ultimax];
+			A[ultimax]=x;
+			ultimax=ultimax+1;
+		}
+		i=i+1;
 	}
-
+	//POST: A contiene gli stessi elementi di A_orig con i valori ==A[0] tutti all'inizio
 	stampa(A,nelemA);
 }
