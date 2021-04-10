@@ -32,7 +32,7 @@ int& FETTE(int (*A)[6][5], int s, char F, int indf, int k)
 	}
 }
 
-//calcB(torta, numStrati, tipoFetta, indiceHFetta, indiceVFetta)
+//calcB(torta, numStrati, indiceHFetta, indiceVFetta)
 bool calcB(int (*A)[6][5], int s, int h, int v) //calcola valore cella B
 {
 	bool fettaValida=true;
