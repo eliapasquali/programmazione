@@ -57,6 +57,7 @@ int stampaASPre(nodo*r, int n, int k)
     if(n==0)
 	{
     	cout << r->info << ' ';
+    	//reset numero di salti con k-1
     	resto = stampaASPre(r->left, k-1, k);
     	resto = stampaASPre(r->right, resto, k);
     }
@@ -101,7 +102,8 @@ int main() {
       
     nodo* root = NULL;
     root = buildTree(a, 0, dim);
-
+    cout<<endl;
+   
     int k;  
     cin>>k;    
     
@@ -110,3 +112,37 @@ int main() {
 	int b1=  stampaASInf(root, k-1, k);
 	cout << " con avanzo "<< b1 <<endl;
 }
+
+/** CORRETTEZZA
+ * 
+ * 	stampaASPre()
+ * 
+ * 	Caso base:
+ *  !r : Sono arrivato alla fine dell'albero e devo ritornare il numero di nodi che mi sono rimasti da saltare
+ * 
+ * 	Caso ricorsivo:
+ * 	All'inizio predispongo una variabile resto per salvarmi quanti nodi mi restano da saltare
+ * 	Se la chiamata è stata fatta con n==0 allora devo stampare il campo info del nodo, per poi continuare secondo
+ * 	l'ordine prefisso. Dopo aver finito di stampare il sottoalbero sinistro mi aspetto come valore di ritorno il 
+ * 	numero di salti che mi restano da fare per quando valuterò il sottoalbero destro.
+ * 	Dato che n è il parametro che uso per valutare il numero di salti da fare ho tre casi
+ * 	Se è uguale a zero devo resettarlo richiamando la prossima funzione con k-1
+ * 	Se non c'è uguaglianza continuo a chiamare la funzione su n-1 per decrementarlo
+ * 	Dopo essere uscito dal sottoalbero sinistro richiamo la funzione con resto, ovvero il valore ritornato dalla chiamata
+ * 	sul sottoalbero sinitro, come n
+ * 	
+ * 	Alla fine della ricorsione la funzione avrà stampato i nodi esatti e ritorna il numero di nodi che dovrebbe saltare
+ *  
+ * 	stampaASInf()
+ * 	
+ * 	Caso base:
+ *  !r : Sono arrivato alla fine dell'albero e devo ritornare il numero di nodi che mi sono rimasti da saltare
+ * 
+ * 	Caso ricorsivo:
+ * 	Secondo l'ordine infisso percorro l'albero stampando solo i nodi uno ogni k.
+ * 	Se n==0 vuol dire che mi trovo in un nodo che devo stampare. Dopo averlo fatto resetto il mio contatore
+ * 	n assegnandoli il valore k.
+ * 	
+ * 	Alla fine della ricorsione la funzione avrà stampato i nodi esatti e ritorna il numero di nodi che dovrebbe saltare
+ * 
+ **/
