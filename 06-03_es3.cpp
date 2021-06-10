@@ -75,8 +75,39 @@ void stampaE(nodoE*x)
 //PRE: Albero(T) ben formato, P contiene dimP>=0 elementi
 nodoE* PM(nodo* T, int* &P, int &dimP)
 {
-	//Percoso prefisso: radice, left, right
-	//nodoE == lista classica 
+	// CASI BASE
+	// Terminato il pattern
+	if(dimP == 0) return 0;
+	// Terminato l'albero
+    if(!T) return 0;
+
+	if(T->info == *P)
+	{
+		// Sposto P da cercare sul successivo
+		P = P+1;
+		dimP = dimP-1;
+		// Secondo l'ordine prefisso continuo a cercare
+		// Prima nel sottoalbero sinistro, poi nel destro
+		nodoE* left = PM(T->left, P, dimP);
+		nodoE* right = PM(T->right, P, dimP);
+		// Unisco i risultati trovati dai due sottoalberi
+		nodoE* match_sottoalberi = conc(left, right);
+		// Aggiungo il nodo corrente al resto del pattern trovato
+		nodoE* total_match = new nodoE(T, match_sottoalberi);
+		return total_match;
+	}
+	else
+	{
+		// Uguale a prima senza modificare P e dimP
+		// Secondo l'ordine prefisso continuo a cercare
+		// Prima nel sottoalbero sinistro, poi nel destro
+		nodoE* left = PM(T->left, P, dimP);
+		nodoE* right = PM(T->right, P, dimP);
+		// Unisco i risultati trovati dai due sottoalberi
+		// Non ho nodi da aggiungere quindi non ho nodi da aggiungere 
+		nodoE* total_match = conc(left, right);
+		return total_match;
+	}
 }
 //POST: se n0, n1, ..., n(k-1), con k<=dimP, sono nodi di T che matchano il massimo possibile di P percorrendo T
 //		in ordine prefisso, allora PM restituisce una lista di k nodoE che puntano a n0, ..., n(k-1)
@@ -94,6 +125,6 @@ int main()
 
     int* P = new int[dimP];
     for(int i=0; i < dimP; i++) cin>>P[i];  
-    nodoE* z= PM(r,P,dimP);
+    nodoE* z = PM(r,P,dimP);
     stampaE(z);
 }

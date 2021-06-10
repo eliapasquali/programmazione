@@ -24,20 +24,61 @@ void stampaL(nodo*L)
     	stampaL(L->next);
     }
 }
-
 // PRE: L(L) ben formata, k>=y, vL=L
 nodo* elimI(nodo* L, int &n, int k, int y)
 {
-
+	// CASI BASE:
+	// Fine lista
+	if(!L) return 0;
+	// Trovati abbastanza nodi info==y da eliminare
+    if(n == k) return L;
+    
+	if(L->info == y)
+	{
+		n = n+1;
+		nodo* aux = elimI(L->next, n, k, y);
+		if(n>=k)
+		{
+			delete L;
+			return aux;
+		}
+	}
+	else L->next = elimI(L->next, n, k, y);
+	
+	return L;
 }
 //POST: se vL contiene almeno k nodi con info=y, allora L è ottenuta da vL eliminando i primi k nodi con info=y di vL,
 //		altrimenti L=vL && se nodi di vL vengono cancellati, essi vanno deallocati
 
-
 // PRE: L(L) ben formata, k>=y, vL=L
-nodo* elimI(nodo* L, int &n, int k, int y)
+nodo* elimF(nodo* L, int &n, int k, int y)
 {
+	// CASI BASE:
+	// Fine lista
+	if(!L)
+	{
+		// Se ci sono abbastanza nodi da eliminare allora n=nodi da eliminare
+		if(n >= k) n = k;
+		// altrimenti n=0
+		else n = 0;
+		return 0;
+	}
 
+	if(L->info == y)
+	{
+		n = n+1;
+		nodo* aux = elimF(L->next, n, k, y);
+		if(n > 0)
+		{
+			delete L;
+			n = n-1;
+			L = aux;
+		}
+		else L->next = aux;
+		
+		return L;
+	}
+	else L->next = elimF(L->next, n, k, y);
 }
 //POST: se vL contiene almeno k nodi con info=y, allora L è ottenuta da vL eliminando gli ultimi k nodi con info=y di vL,
 //		altrimenti L=vL && se nodi di vL vengono cancellati, essi vanno deallocati
