@@ -120,3 +120,50 @@ main()
 	stampa_LR_iter(L1);
 	stampa_LR_iter(q);
 }
+
+/** CORRETTEZZA
+ * 
+ * 	full_match()
+ * 
+ * 	Casi base:
+ * 	!P : Se sono arrivato alla fine di P allora ho trovato un match completo e contiguo di P in T e restituisco true
+ * 	!T : Se sono arrivato alla fine di T e il caso base precedente non è verificato allora T non contiene un match
+ * 		 di P e quindi restituisco false
+ * 	Caso ricorsivo:
+ * 	Verifico se il nodo corrente di T e quello di P sono uguali, se il controllo fallisce restituisco false
+ * 	Se invece è vero continuo a cercare il match completo di P richiamando full_match sui successivi nodi di entrambe le liste
+ * 
+ *	match1()
+ *
+ * 	Casi base:
+ * 	!P : Ho trovato un match completo e contiguo di P in T quindi devo restituire una struttura doppiaL con primo campo
+ * 		 contenente il resto di T dopo il match e come secondo campo il restante del match di P (cioè 0)
+ * 	!T : Sono arrivato alla fine di T e quindi devo restituire una struttura doppiaL con primo campo contenente
+ * 		 il resto di T dopo il match (cioè 0 essendo alla fine) e come secondo campo il restante del
+ * 		 match di P (cioè 0 non essendoci match)
+ * 	Caso ricorsivo:
+ * 	Verifico a partire dal nodo corrente di T c'è un match completo e contiguo di P tramite la funzione full_match()
+ * 	Se è verificata invoco la funzione match1() sui nodi successivi di entrambe le liste, altrimenti solo sul prossimo
+ *	nodo di T. Al ritorno dalle ricorsioni la mia struttura doppiaL contiene:
+ * 	Se il match era presente allora metto come primo campo di doppiaL il nodo di T (cioè il match) 
+ * 	Altrimenti inserisco il nodo corrente di T nel secondo campo di doppiaL (cioè il resto di T che non fa parte del match)
+ * 	
+ * 	Nota: Essendo una funzione ricorsiva di tipo 1 ogni volta devo ricollegare il valore ritornato con il nodo corrente 
+ * 
+ * 	match3()
+ * 
+ * 	Casi base:
+ * 	!T : Sono arrivato alla fine della lista e ritorno 0 per indicare la fine. Se è stato trovato un match che si conclude alla
+ * 		 fine di T allora questo valore ritornato rispetta la POST e lo fa anche nel caso non fosse stato trovato un match
+ * 	!P : Ho trovato un match completo di P in T e quindi tramite return posso restituire 0 ovvero la fine del match
+ * 
+ * 	Caso ricorsivo:
+ * 	Verifico sempre tramite full_match() la presenza di un match completo e contiguo di P in T
+ * 	Se questo è vero allora salvo il nodo in una variabile che mi servirà per ritornare la parte del match estratta da T
+ * 	Modifico T nel suo successore e richiamo quindi match3() su T e sul prossimo nodo di P
+ * 	Altrimenti continuo a cercare solo sul prossimo nodo di T
+ * 
+ * 	Nota: la funzione restituisce la parte di T con il match agendo come una ricorsione di tipo1, quindi la variabile che creo
+ * 		serve a gestire i valori di ritorno che vengono sempre ricollegati 
+ * 
+ **/

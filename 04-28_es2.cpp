@@ -16,15 +16,9 @@ int match_ric(int*T, int LT, int*P, int LP)
     if (LT==0) return -1;
     if (LP==0) return LT;
 
-    cout << LP<< " con mod " << LP%3 << endl;
-    if (T[0]==P[0])
-    {
-        match_ric(T+1, LT-1, P+1, LP-1);
-    }
-    else
-    {
-        match_ric(T-(LP%3)+1, LT+(LP%3)-1, P-(LP%3), LP+(LP%3));
-    }
+    if (T[0]==P[0]) match_ric(T+1, LT-1, P+1, LP-1);
+    else match_ric(T-(LP%3)+1, LT+(LP%3)-1, P-(LP%3), LP+(LP%3));
+    
 }
 
 void stampa(int *A, int LA)

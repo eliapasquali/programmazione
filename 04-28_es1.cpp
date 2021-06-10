@@ -122,3 +122,5 @@ int main() {
  *      restituendo true, soddisfiamo completamente POST_partenza. Il cammino restituito in Path è quello più a sinistra per 2 motivi:
  *          - esaminiamo la riga 0 da sinistra a destra e interrompiamo l’esecuzione non appena troviamo un cammino, quindi il cammino inizia il prima possibile;
  *          - POST_ric_mossa ci garantisce che per il dato punto di inizio venga messo in Path il cammino più a sinistra;
+ *
+ **/

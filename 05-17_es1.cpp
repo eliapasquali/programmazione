@@ -74,20 +74,17 @@ nodo* insOrd_iter(nodo* L, nodo* x)
 	}
 
 	nodo* aux = L;
-	while(aux)
+	while(aux && aux->info < x->info) //R: aux && aux->info < x->info allora x non può essere inserito prima di aux
 	{
-		if(aux->info < x->info)
+		if(aux->next)
 		{
-			if(aux->next)
+			if(aux->next->info > x->info)
 			{
-				if(aux->next->info > x->info)
-				{
-					x->next = aux->next;
-					aux->next = x;
-				}
+				x->next = aux->next;
+				aux->next = x;
 			}
-			else aux->next = x;
 		}
+		else aux->next = x;
 		aux = aux->next;
 	}
 
@@ -107,3 +104,21 @@ main()
     stampa(L);
     stampa(L1);
 }
+
+/** CORRETTEZZA
+ * 
+ * 	indOrd_ric()
+ * 
+ * 	Casi base:
+ * 	!L : Se sono arrivato alla fine di L senza aver già inserito il nuovo nodo, allora ritorno quel nodo
+ * 
+ * 	Caso ricorsivo:
+ * 	Verifico se il campo info del nodo corrente di L è maggiore o uguale di quello da inserire
+ * 	Se il controllo è vero allora il nodo da inserire deve essere inserito prima dell'attuale L allora collego L
+ * 	come campo next del nuovo nodo e restituisco il nuovo che ora costituisce il resto della mia lista con x
+ * 	inserito nel punto corretto  
+ * 	
+ * 	Essendo una funzione ricorsiva di tipo 1 se questo controllo non è verificato richiama se stessa sul successivo
+ * 	nodo di L e al ritorno si occuperà di collegare il valore ricevuto con il nodo corrente
+ *  
+ **/

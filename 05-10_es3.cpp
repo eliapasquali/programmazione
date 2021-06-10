@@ -101,3 +101,19 @@ main()
 	stampa_LR_iter(D.S);
 }
 
+/** CORRETTEZZA
+ * 
+ * 	full_match()
+ * 
+ * 	Casi base:
+ * 	!P : Se sono arrivato alla fine di P allora ho trovato un match completo di P in T e restituisco true
+ * 	!T : Se sono arrivato alla fine di T e il caso base precedente non è verificato allora T non contiene un match
+ * 		 di P e quindi restituisco false
+ * 	Caso ricorsivo:
+ * 	Verifico se il nodo corrente di T e quello di P sono uguali
+ * 	Se il controllo è vero allora continuo a ricercare il match richiamando la funzione sui successivi nodi di entrambe le liste
+ *  Altrimenti mi sposto solo sul successivo di T mantenendo invariato P 
+ * 
+ *	match1() corretta e già dimostrata
+ * 
+ **/

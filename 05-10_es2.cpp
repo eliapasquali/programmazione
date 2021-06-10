@@ -83,3 +83,26 @@ main()
 	stampa_LR_iter(q);
 	stampa_LR_iter(L);
 }
+
+/** CORRETTEZZA
+ * 
+ * 	full_match() corretta già dimostrata
+ * 
+ * 	match3b()
+ * 
+ * 	Casi base:
+ * 	!T : Sono arrivato alla fine di T e restuisco 0 ovvero cioè che resta di T col return
+ * 	!P : Ho trovato un match completo di P in T. Allora dovendo restituire il resto di T tramite valore lo salvo
+ * 		 in una variabile che passerò al return mentre modifico la variabile per riferimento con 0 per segnare
+ * 		 l'arrivo alla fine della lista
+ * 
+ * 	Caso ricorsivo:
+ * 	Verifico tramite full_match() se è presente un match completo e contiguo di P in T
+ * 	Se il controllo è verificato allora continuo ad avanzare di nodi
+ * 	Altrimenti devo "scambiare" la variabile passata per riferimento con la lista da ritornare per valore. Per fare ciò salvo
+ * 	il nodo corrente nella variabile da restituire, modifico T per riferimento nel suo successivo.
+ *  
+ * 	Nota: la funzione restituisce il resto del match agendo come una ricorsione di tipo 1 e quindi devo ricollegare la lista
+ * 		attuale da restituire al nodo ritornato dalla funzione. 
+ * 
+ **/
